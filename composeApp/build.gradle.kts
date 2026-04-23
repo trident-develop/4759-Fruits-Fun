@@ -65,15 +65,15 @@ kotlin {
 }
 
 android {
-    namespace = "com.astrologicmedia.retrora"
+    namespace = "kr.co.nowcom.mobile.afre"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.astrologicmedia.retrora"
+        applicationId = "kr.co.nowcom.mobile.afre"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
     }
     packaging {
         resources {

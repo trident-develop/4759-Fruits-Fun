@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:310397159206:android:07556312295821223e23e7",
+        "mobilesdk_app_id": "1:310397159206:android:1d0b42ff7a23ff493e23e7",
         "android_client_info": {
-          "package_name": "com.astrologicmedia.retrora"
+          "package_name": "kr.co.nowcom.mobile.afre"
         }
       },
       "oauth_client": [],
