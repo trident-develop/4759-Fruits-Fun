@@ -1,5 +1,10 @@
-package org.example.project.screensgray
+package org.example.project.screens
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -24,15 +29,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import org.example.project.ConnectRoute
+import org.example.project.LoadingRoute
 
 @Composable
-fun ConnectScreen(onConnected: () -> Unit) {
+fun ConnectScreen(navController: NavController) {
 
     var showButton by remember { mutableStateOf(true) }
     var showConnecting by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    BackHandler(enabled = true) {}
 
 
     Box(
@@ -96,7 +108,14 @@ fun ConnectScreen(onConnected: () -> Unit) {
                                     showButton = false
                                     showConnecting = true
 
-
+                                    if (context.isFlowersConnected()) {
+                                        navController.navigate(LoadingRoute) {
+                                            popUpTo(ConnectRoute) { inclusive = true }
+                                        }
+                                    } else {
+                                        showButton = true
+                                        showConnecting = false
+                                    }
                                 }
                             )
                         }
@@ -135,4 +154,19 @@ fun PrimaryButton(
             style = MaterialTheme.typography.labelLarge
         )
     }
+}
+
+@SuppressLint("ServiceCast")
+fun Context.isFlowersConnected(): Boolean {
+    val ballConnectivityManager =
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeBallNetwork = ballConnectivityManager.activeNetwork
+    val ballCapabilities = ballConnectivityManager.getNetworkCapabilities(activeBallNetwork)
+
+    return ballCapabilities?.run {
+        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ||
+                hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+    } == true
 }

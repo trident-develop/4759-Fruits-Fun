@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.zip.ZipEntry
@@ -12,6 +13,14 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.lsparanoid)
+}
+
+lsparanoid {
+    seed = 22
+    classFilter = { it.startsWith("kr.co.nowcom.mobile.afre") }
+    includeDependencies = false
+    variantFilter = { true }
 }
 
 kotlin {
@@ -33,6 +42,12 @@ kotlin {
     
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.koin.android)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.okhttp)
+            implementation(libs.installreferrer)
+            implementation(libs.androidx.fragment.ktx)
             implementation(libs.play.services.ads)
             implementation(libs.firebase.messaging)
             implementation(project.dependencies.platform(libs.firebase.bom))
@@ -51,6 +66,7 @@ kotlin {
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
+            implementation(libs.compose.ui.backhandler)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
@@ -72,8 +88,8 @@ android {
         applicationId = "kr.co.nowcom.mobile.afre"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 3
+        versionName = "1.2"
     }
     packaging {
         resources {

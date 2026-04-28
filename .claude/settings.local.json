@@ -39,7 +39,10 @@
       "Bash(sed -i '' 's/Translations.country\\(country.name, lang\\)/Translations.country\\(country.name, LocalLanguage.current\\)/g' composeApp/src/commonMain/kotlin/org/example/project/screens/OriginsScreen.kt)",
       "Bash(sed -i '' 's/Translations.fruit\\(fruit.name, lang\\)/Translations.fruit\\(fruit.name, LocalLanguage.current\\)/g' composeApp/src/commonMain/kotlin/org/example/project/screens/OriginsScreen.kt)",
       "Bash(./gradlew :composeApp:compileKotlinIosSimulatorArm64)",
-      "Bash(./gradlew :composeApp:compileKotlinIosSimulatorArm64 --info)"
+      "Bash(./gradlew :composeApp:compileKotlinIosSimulatorArm64 --info)",
+      "Bash(/Users/artem/AndroidStudioProjects/4759-Fruits-Fun/gradlew -p /Users/artem/AndroidStudioProjects/4759-Fruits-Fun :composeApp:compileDebugKotlin)",
+      "Bash(unzip *)",
+      "Bash(xargs -I {} unzip -l {})"
     ]
   }
 }

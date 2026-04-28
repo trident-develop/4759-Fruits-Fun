@@ -1,17 +1,31 @@
 package org.example.project.screens
 
-import androidx.compose.animation.core.*
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.EaseInOutCubic
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
@@ -19,24 +33,32 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
-import org.example.project.theme.*
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.painterResource
 import fruitsfun.composeapp.generated.resources.Res
 import fruitsfun.composeapp.generated.resources.banana
 import fruitsfun.composeapp.generated.resources.cherry
 import fruitsfun.composeapp.generated.resources.grape
 import fruitsfun.composeapp.generated.resources.kiwi
 import fruitsfun.composeapp.generated.resources.lemon
-import fruitsfun.composeapp.generated.resources.watermelon
 import fruitsfun.composeapp.generated.resources.pear
 import fruitsfun.composeapp.generated.resources.plum
+import fruitsfun.composeapp.generated.resources.watermelon
+import kr.co.nowcom.mobile.afre.R
+import org.example.project.theme.Cream
+import org.example.project.theme.MintGreen
+import org.example.project.theme.MutedOrange
+import org.example.project.theme.PeachLight
+import org.example.project.theme.SoftBerry
+import org.example.project.theme.SoftGreen
+import org.example.project.theme.SoftGreenLight
+import org.example.project.theme.SoftLavender
+import org.example.project.theme.SoftPink
+import org.example.project.theme.WarmYellow
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 private data class OrbitFruit(
     val res: DrawableResource,
@@ -48,11 +70,7 @@ private data class OrbitFruit(
 
 @Composable
 fun LoadingScreen(onLoadingComplete: () -> Unit) {
-    LaunchedEffect(Unit) {
-        delay(2000)
-        onLoadingComplete()
-    }
-
+    BackHandler(enabled = true) {}
     val infiniteTransition = rememberInfiniteTransition()
 
     // Center fruit animations
@@ -157,6 +175,12 @@ fun LoadingScreen(onLoadingComplete: () -> Unit) {
             ),
         contentAlignment = Alignment.Center,
     ) {
+        Image(
+            painter = androidx.compose.ui.res.painterResource(id = R.drawable.bg_1),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         // Floating decorative blobs
         Box(
             modifier = Modifier
