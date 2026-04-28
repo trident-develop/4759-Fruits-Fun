@@ -42,7 +42,8 @@
       "Bash(./gradlew :composeApp:compileKotlinIosSimulatorArm64 --info)",
       "Bash(/Users/artem/AndroidStudioProjects/4759-Fruits-Fun/gradlew -p /Users/artem/AndroidStudioProjects/4759-Fruits-Fun :composeApp:compileDebugKotlin)",
       "Bash(unzip *)",
-      "Bash(xargs -I {} unzip -l {})"
+      "Bash(xargs -I {} unzip -l {})",
+      "Bash(xargs ls *)"
     ]
   }
 }

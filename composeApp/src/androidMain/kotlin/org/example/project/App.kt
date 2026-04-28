@@ -34,6 +34,7 @@ import org.example.project.theme.FruitTheme
 import org.example.project.utils.ShiftCodec
 import org.example.project.utils.ShiftCodec.DM
 import org.example.project.utils.log
+import org.example.project.utils.rememberCooldownClick
 import org.example.project.viewmodel.LoadingViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -120,14 +121,15 @@ fun App(show3: Show3) {
                         context.finish()
                     }
                 }
+                val onAddRecipeClick = rememberCooldownClick {
+                    navController.navigate(AddRecipeRoute())
+                }
                 MainScreen(
                     appState = appState,
                     onRecipeClick = { recipeId ->
                         navController.navigate(RecipeDetailsRoute(recipeId))
                     },
-                    onAddRecipeClick = {
-                        navController.navigate(AddRecipeRoute())
-                    },
+                    onAddRecipeClick = onAddRecipeClick,
                     onEditRecipeClick = { recipeId ->
                         navController.navigate(AddRecipeRoute(editRecipeId = recipeId))
                     },
@@ -145,40 +147,45 @@ fun App(show3: Show3) {
             composable<AddRecipeRoute> { backStackEntry ->
                 val route = backStackEntry.toRoute<AddRecipeRoute>()
                 val editId = route.editRecipeId.takeIf { it >= 0 }
+                val onBack = rememberCooldownClick { navController.popBackStack() }
                 AddRecipeScreen(
                     appState = appState,
-                    onBack = { navController.popBackStack() },
+                    onBack = onBack,
                     editRecipeId = editId,
                 )
             }
             composable<WebViewRoute> { backStackEntry ->
                 val route = backStackEntry.toRoute<WebViewRoute>()
+                val onBack = rememberCooldownClick { navController.popBackStack() }
                 WebViewScreen(
                     url = route.url,
                     title = route.title,
-                    onBack = { navController.popBackStack() },
+                    onBack = onBack,
                 )
             }
             composable<SettingsRoute> {
+                val onBack = rememberCooldownClick { navController.popBackStack() }
                 SettingsScreen(
                     appState = appState,
-                    onBack = { navController.popBackStack() },
+                    onBack = onBack,
                 )
             }
             composable<FruitDetailsRoute> { backStackEntry ->
                 val route = backStackEntry.toRoute<FruitDetailsRoute>()
+                val onBack = rememberCooldownClick { navController.popBackStack() }
                 FruitDetailsScreen(
                     fruitName = route.fruitName,
                     appState = appState,
-                    onBack = { navController.popBackStack() },
+                    onBack = onBack,
                 )
             }
             composable<RecipeDetailsRoute> { backStackEntry ->
                 val route = backStackEntry.toRoute<RecipeDetailsRoute>()
+                val onBack = rememberCooldownClick { navController.popBackStack() }
                 RecipeDetailsScreen(
                     recipeId = route.recipeId,
                     appState = appState,
-                    onBack = { navController.popBackStack() },
+                    onBack = onBack,
                     onEdit = { recipeId ->
                         navController.navigate(AddRecipeRoute(editRecipeId = recipeId))
                     },

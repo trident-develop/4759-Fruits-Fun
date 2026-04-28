@@ -59,4 +59,9 @@ class MainActivity : ComponentActivity() {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemBars()
     }
+
+    override fun onDestroy() {
+        show3.destroy()
+        super.onDestroy()
+    }
 }
